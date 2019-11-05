@@ -54,7 +54,7 @@ int main() {
 
     // Matrix Graph
 
-    /*auto * matrixGraph = new GraphMatrix();
+    auto * matrixGraph = new GraphMatrix();
 
     matrixGraph->addANodeToTheGraph();
 
@@ -76,7 +76,7 @@ int main() {
 
     matrixGraph->connectNodes(5, 1);
 
-    std::cout << *matrixGraph;*/
+    std::cout << *matrixGraph;
 
     return 0;
 }
