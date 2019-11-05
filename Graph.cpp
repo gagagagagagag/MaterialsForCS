@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <algorythm>
 #include "Graph.h"
 
 Graph::Graph() {

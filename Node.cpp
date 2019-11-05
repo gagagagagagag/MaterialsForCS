@@ -2,6 +2,7 @@
 // Created by Jakub Przywara on 2019-10-29.
 //
 
+#include <string>
 #include "Node.h"
 #include "Graph.h"
 
