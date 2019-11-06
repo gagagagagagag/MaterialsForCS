@@ -8,7 +8,7 @@ int main() {
 
     auto * graph = new Graph();
 
-    graph->addANodeToTheGraph();
+    graph->addANodeToTheGraph(75);
 
     graph->addANodeToTheGraph();
 
@@ -34,8 +34,6 @@ int main() {
 
     graph->connectNodes(0, 5);
 
-    graph->removeANodeFromTheGraph(3);
-
     std::cout << std::endl;
     std::cout << "---------------------------------------" << std::endl;
     std::cout << std::endl;
@@ -46,9 +44,11 @@ int main() {
 
     std::cout << (graph->isGraphEuler() ? "Graph is Euler." : "Graph is not Euler.") << std::endl;
 
+    std::cout << (graph->isIsomorphicToTriangle() ? "Graph is isomorphic." : "Graph is not isomorphic.") << std::endl;
+
     Node * mostConnectionsNode = graph->vertexMaxDegree();
 
-    std::cout << "The node with the most connections has an index: " << mostConnectionsNode->getIndex() << " and has " << mostConnectionsNode->getConnectedNodesLength() << " connections" << std::endl;
+    if (mostConnectionsNode != nullptr) std::cout << "The node with the most connections has an index: " << mostConnectionsNode->getIndex() << " and has " << mostConnectionsNode->getConnectedNodesLength() << " connections" << std::endl;
 
     std::cout << *graph;
 

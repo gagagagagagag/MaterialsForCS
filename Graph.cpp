@@ -3,7 +3,6 @@
 //
 
 #include <iostream>
-#include <algorythm>
 #include "Graph.h"
 
 Graph::Graph() {
@@ -113,12 +112,18 @@ bool Graph::isGraphConnected() {
         node->setChecked(false);
     }
 
+    Node * firstExistingNode = this->getFirstNotNullNode();
+
+    if (firstExistingNode == nullptr) {
+        return false;
+    }
+
     // Take the first node, get the connections and mark it checked
-    for (Node * node : this->getNodeWithIndex(0)->getConnectedNodes()) {
+    for (Node * node : firstExistingNode->getConnectedNodes()) {
         placesToCheck.push_back(node);
     }
 
-    this->getNodeWithIndex(0)->setChecked(true);
+    firstExistingNode->setChecked(true);
 
     // Check nodes until there is nothing to check
     while (!placesToCheck.empty()) {
@@ -157,12 +162,55 @@ Node* Graph::vertexMaxDegree() {
     std::vector<Node *>::iterator it;
     it = std::max_element(this->nodesInTheGraph.begin(), this->nodesInTheGraph.end(), [](Node * a, Node * b){
         if (a == nullptr || b == nullptr) {
-            return false;
+            return true;
         }
         return a->getConnectedNodesLength() < b->getConnectedNodesLength();
     });
 
     return *it;
+}
+
+bool Graph::isIsomorphicToTriangle() {
+    if (this->getNotNullNodesCount() < 3) {
+        return false;
+    }
+
+    for (auto * node : this->nodesInTheGraph) {
+        if (node == nullptr) {
+            continue;
+        }
+
+        for (auto * connectedNode : node->getConnectedNodes()) {
+            for (auto * connectedConnectedNode : connectedNode->getConnectedNodes()) {
+                if (connectedConnectedNode == node) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+Node * Graph::getFirstNotNullNode() {
+    for (auto * node : this->nodesInTheGraph) {
+        if (node != nullptr) {
+            return node;
+        }
+    }
+
+    return nullptr;
+}
+
+int Graph::getNotNullNodesCount() {
+    int counter = 0;
+    for (auto * node : this->nodesInTheGraph) {
+        if (node != nullptr) {
+            counter++;
+        }
+    }
+
+    return counter;
 }
 
 

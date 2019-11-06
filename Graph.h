@@ -22,7 +22,11 @@ public:
 
     Node * getNodeWithIndex(int index);
 
+    Node * getFirstNotNullNode();
+
     int getNodesCount();
+
+    int getNotNullNodesCount();
 
     void connectNodes(Node& a, Node& b);
 
@@ -39,6 +43,8 @@ public:
     bool isGraphEuler();
 
     Node* vertexMaxDegree();
+
+    bool isIsomorphicToTriangle();
 
     friend std::ostream& operator<<(std::ostream& out, const Graph& graph){
 

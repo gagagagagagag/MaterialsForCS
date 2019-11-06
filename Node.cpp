@@ -75,7 +75,7 @@ Node::Node(int index) : index(index) {
 }
 
 int Node::getIndex() const {
-    return index;
+    return this->index;
 }
 
 void Node::setIndex(int index) {
