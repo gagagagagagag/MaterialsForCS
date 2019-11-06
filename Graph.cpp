@@ -181,9 +181,23 @@ bool Graph::isIsomorphicToTriangle() {
         }
 
         for (auto * connectedNode : node->getConnectedNodes()) {
+            if (connectedNode == node) {
+                continue;
+            }
+
             for (auto * connectedConnectedNode : connectedNode->getConnectedNodes()) {
-                if (connectedConnectedNode == node) {
-                    return true;
+                if (connectedConnectedNode == connectedNode) {
+                    continue;
+                }
+
+                for (auto * connectedConnectedConnectedNode : connectedConnectedNode->getConnectedNodes()) {
+                    if (connectedConnectedConnectedNode == connectedConnectedNode) {
+                        continue;
+                    }
+
+                    if (connectedConnectedConnectedNode == node) {
+                        return true;
+                    }
                 }
             }
         }
