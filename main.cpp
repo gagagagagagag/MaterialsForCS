@@ -8,7 +8,7 @@ int main() {
 
     auto * graph = new Graph();
 
-    graph->addANodeToTheGraph(75);
+    graph->addANodeToTheGraph();
 
     graph->addANodeToTheGraph();
 
@@ -34,6 +34,8 @@ int main() {
 
     graph->connectNodes(0, 5);
 
+    graph->removeANodeFromTheGraph(4);
+
     std::cout << std::endl;
     std::cout << "---------------------------------------" << std::endl;
     std::cout << std::endl;
@@ -44,11 +46,15 @@ int main() {
 
     std::cout << (graph->isGraphEuler() ? "Graph is Euler." : "Graph is not Euler.") << std::endl;
 
-    std::cout << (graph->isIsomorphicToTriangle() ? "Graph is isomorphic." : "Graph is not isomorphic.") << std::endl;
+    std::cout << (graph->isIsomorphicToTriangle() ? "There exists a subgraph in the graph that is isomorphic to a graph containing three nodes in a triangular pattern." : "There does not exist a subgraph in the graph that is isomorphic to a graph containing three nodes in a triangular pattern.") << std::endl;
 
     Node * mostConnectionsNode = graph->vertexMaxDegree();
 
     if (mostConnectionsNode != nullptr) std::cout << "The node with the most connections has an index: " << mostConnectionsNode->getIndex() << " and has " << mostConnectionsNode->getConnectedNodesLength() << " connections" << std::endl;
+
+    Node * leastConnectionsNode = graph->vertexMinDegree();
+
+    if (leastConnectionsNode != nullptr) std::cout << "The node with the least connections has an index: " << leastConnectionsNode->getIndex() << " and has " << leastConnectionsNode->getConnectedNodesLength() << " connections" << std::endl;
 
     std::cout << *graph;
 

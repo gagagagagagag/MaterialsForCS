@@ -1,7 +1,3 @@
-//
-// Created by Jakub Przywara on 2019-10-29.
-//
-
 #ifndef PLAYGROUND_GRAPH_H
 #define PLAYGROUND_GRAPH_H
 
@@ -43,6 +39,8 @@ public:
     bool isGraphEuler();
 
     Node* vertexMaxDegree();
+
+    Node* vertexMinDegree();
 
     bool isIsomorphicToTriangle();
 

@@ -1,7 +1,3 @@
-//
-// Created by Jakub Przywara on 2019-10-29.
-//
-
 #include <iostream>
 #include "Graph.h"
 
@@ -158,18 +154,6 @@ bool Graph::isGraphEuler() {
     return this->isGraphEven() && this->isGraphConnected();
 }
 
-Node* Graph::vertexMaxDegree() {
-    std::vector<Node *>::iterator it;
-    it = std::max_element(this->nodesInTheGraph.begin(), this->nodesInTheGraph.end(), [](Node * a, Node * b){
-        if (a == nullptr || b == nullptr) {
-            return true;
-        }
-        return a->getConnectedNodesLength() < b->getConnectedNodesLength();
-    });
-
-    return *it;
-}
-
 bool Graph::isIsomorphicToTriangle() {
     if (this->getNotNullNodesCount() < 3) {
         return false;
@@ -226,5 +210,37 @@ int Graph::getNotNullNodesCount() {
 
     return counter;
 }
+
+Node* Graph::vertexMaxDegree() {
+    std::vector<Node *>::iterator it;
+    it = std::max_element(this->nodesInTheGraph.begin(), this->nodesInTheGraph.end(), [](Node * a, Node * b){
+        if (a == nullptr) {
+            return true;
+        }
+        if (b == nullptr) {
+            return false;
+        }
+        return a->getConnectedNodesLength() < b->getConnectedNodesLength();
+    });
+
+    return *it;
+}
+
+Node *Graph::vertexMinDegree() {
+    std::vector<Node *>::iterator it;
+    it = std::max_element(this->nodesInTheGraph.begin(), this->nodesInTheGraph.end(), [](Node * a, Node * b){
+        if (a == nullptr) {
+            return true;
+        }
+        if (b == nullptr) {
+            return false;
+        }
+        return a->getConnectedNodesLength() > b->getConnectedNodesLength();
+    });
+
+    return *it;
+}
+
+
 
 

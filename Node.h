@@ -1,12 +1,6 @@
-//
-// Created by Jakub Przywara on 2019-10-29.
-//
-
 #include <vector>
 #include <ostream>
 
-
-class Graph;
 
 #ifndef PLAYGROUND_NODE_H
 #define PLAYGROUND_NODE_H
