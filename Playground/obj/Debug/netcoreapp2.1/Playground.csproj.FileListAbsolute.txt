@@ -1,0 +1,11 @@
+/Users/jakubprzywara/Desktop/Code/dotNet/Playground/Playground/bin/Debug/netcoreapp2.1/Playground.deps.json
+/Users/jakubprzywara/Desktop/Code/dotNet/Playground/Playground/bin/Debug/netcoreapp2.1/Playground.runtimeconfig.json
+/Users/jakubprzywara/Desktop/Code/dotNet/Playground/Playground/bin/Debug/netcoreapp2.1/Playground.runtimeconfig.dev.json
+/Users/jakubprzywara/Desktop/Code/dotNet/Playground/Playground/bin/Debug/netcoreapp2.1/Playground.dll
+/Users/jakubprzywara/Desktop/Code/dotNet/Playground/Playground/bin/Debug/netcoreapp2.1/Playground.pdb
+/Users/jakubprzywara/Desktop/Code/dotNet/Playground/Playground/obj/Debug/netcoreapp2.1/Playground.csprojAssemblyReference.cache
+/Users/jakubprzywara/Desktop/Code/dotNet/Playground/Playground/obj/Debug/netcoreapp2.1/Playground.csproj.CoreCompileInputs.cache
+/Users/jakubprzywara/Desktop/Code/dotNet/Playground/Playground/obj/Debug/netcoreapp2.1/Playground.AssemblyInfoInputs.cache
+/Users/jakubprzywara/Desktop/Code/dotNet/Playground/Playground/obj/Debug/netcoreapp2.1/Playground.AssemblyInfo.cs
+/Users/jakubprzywara/Desktop/Code/dotNet/Playground/Playground/obj/Debug/netcoreapp2.1/Playground.dll
+/Users/jakubprzywara/Desktop/Code/dotNet/Playground/Playground/obj/Debug/netcoreapp2.1/Playground.pdb

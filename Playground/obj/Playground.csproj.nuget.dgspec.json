@@ -1,0 +1,58 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/jakubprzywara/Desktop/Code/dotNet/Playground/Playground/Playground.csproj": {}
+  },
+  "projects": {
+    "/Users/jakubprzywara/Desktop/Code/dotNet/Playground/Playground/Playground.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/jakubprzywara/Desktop/Code/dotNet/Playground/Playground/Playground.csproj",
+        "projectName": "Playground",
+        "projectPath": "/Users/jakubprzywara/Desktop/Code/dotNet/Playground/Playground/Playground.csproj",
+        "packagesPath": "/Users/jakubprzywara/.nuget/packages/",
+        "outputPath": "/Users/jakubprzywara/Desktop/Code/dotNet/Playground/Playground/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/Users/jakubprzywara/.config/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}
