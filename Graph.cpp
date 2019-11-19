@@ -150,6 +150,55 @@ bool Graph::isGraphConnected() {
     return true;
 }
 
+bool Graph::isGraphConnectedDFS() {
+    if (this->nodesInTheGraph.empty()) {
+        return false;
+    }
+
+    if (this->nodesInTheGraph.size() == 1) {
+        return true;
+    }
+
+    // Set all checked values to false
+    for (Node * node : this->nodesInTheGraph) {
+        if (node == nullptr) {
+            continue;
+        }
+
+        node->setChecked(false);
+    }
+
+    isGraphConnectedDFSRecursion(*this->getFirstNotNullNode());
+
+    // Check if all the nodes are checked
+    for (Node * node : this->nodesInTheGraph) {
+        if (node == nullptr) {
+            continue;
+        }
+
+        if (!node->isChecked()) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void Graph::isGraphConnectedDFSRecursion(Node &node) {
+
+    node.setChecked(true);
+
+    for (Node * connectedNode : node.getConnectedNodes()) {
+        if (connectedNode == nullptr || connectedNode == &node) {
+            continue;
+        }
+
+        if (!connectedNode->isChecked()) {
+            isGraphConnectedDFSRecursion(*connectedNode);
+        }
+    }
+}
+
+
 bool Graph::isGraphEuler() {
     return this->isGraphEven() && this->isGraphConnected();
 }
@@ -240,6 +289,7 @@ Node *Graph::vertexMinDegree() {
 
     return *it;
 }
+
 
 
 

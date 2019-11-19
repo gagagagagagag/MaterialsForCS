@@ -36,6 +36,8 @@ public:
 
     bool isGraphConnected();
 
+    bool isGraphConnectedDFS();
+
     bool isGraphEuler();
 
     Node* vertexMaxDegree();
@@ -68,6 +70,8 @@ public:
 
 private:
     std::vector<Node *> nodesInTheGraph;
+
+    void isGraphConnectedDFSRecursion(Node &node);
 };
 
 

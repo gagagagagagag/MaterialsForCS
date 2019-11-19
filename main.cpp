@@ -36,7 +36,7 @@ int main() {
 
     graph->connectNodes(0, 5);
 
-    graph->removeANodeFromTheGraph(4);
+//    graph->removeANodeFromTheGraph(2);
 
     std::cout << std::endl;
     std::cout << "---------------------------------------" << std::endl;
@@ -44,7 +44,9 @@ int main() {
 
     std::cout << (graph->isGraphEven() ? "Graph is even." : "Graph is not even.") << std::endl;
 
-    std::cout << (graph->isGraphConnected() ? "Graph is connected." : "Graph is not connected.") << std::endl;
+    std::cout << (graph->isGraphConnected() ? "Graph is connected. (BFS)" : "Graph is not connected. (BFS)") << std::endl;
+
+    std::cout << (graph->isGraphConnectedDFS() ? "Graph is connected. (DFS)" : "Graph is not connected. (DFS)") << std::endl;
 
     std::cout << (graph->isGraphEuler() ? "Graph is Euler." : "Graph is not Euler.") << std::endl;
 
