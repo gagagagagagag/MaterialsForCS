@@ -150,7 +150,7 @@ bool Graph::isGraphConnected() {
     return true;
 }
 
-bool Graph::isGraphConnectedDFS() {
+bool Graph::isGraphConnectedDFS(bool verbose) {
     if (this->nodesInTheGraph.empty()) {
         return false;
     }
@@ -168,7 +168,7 @@ bool Graph::isGraphConnectedDFS() {
         node->setChecked(false);
     }
 
-    isGraphConnectedDFSRecursion(*this->getFirstNotNullNode());
+    isGraphConnectedDFSRecursion(*this->getFirstNotNullNode(), verbose);
 
     // Check if all the nodes are checked
     for (Node * node : this->nodesInTheGraph) {
@@ -183,9 +183,13 @@ bool Graph::isGraphConnectedDFS() {
     return true;
 }
 
-void Graph::isGraphConnectedDFSRecursion(Node &node) {
+void Graph::isGraphConnectedDFSRecursion(Node &node, bool verbose) {
 
     node.setChecked(true);
+
+    if (verbose) {
+        std::cout << "(DFS) Reached node with index: " << node.getIndex() << std::endl;
+    }
 
     for (Node * connectedNode : node.getConnectedNodes()) {
         if (connectedNode == nullptr || connectedNode == &node) {
@@ -193,7 +197,7 @@ void Graph::isGraphConnectedDFSRecursion(Node &node) {
         }
 
         if (!connectedNode->isChecked()) {
-            isGraphConnectedDFSRecursion(*connectedNode);
+            isGraphConnectedDFSRecursion(*connectedNode, verbose);
         }
     }
 }
@@ -288,6 +292,78 @@ Node *Graph::vertexMinDegree() {
     });
 
     return *it;
+}
+
+bool Graph::checkIfNodesAreConnectedDFSRecursion(Node *nextNode, Node *source, Node *target, bool verbose) {
+
+    if (verbose && !nextNode->isChecked()) {
+        std::cout << "(DFS) Checked node with index: " << nextNode->getIndex() << std::endl;
+    }
+
+    nextNode->setChecked(true);
+
+    if (nextNode == target && !verbose) {
+        return true;
+    }
+
+    bool connected = false;
+
+    for (Node * node : nextNode->getConnectedNodes()) {
+        if (node->isChecked()) {
+            continue;
+        }
+
+        if (checkIfNodesAreConnectedDFSRecursion(node, source, target, verbose)) {
+            connected = true;
+        }
+    }
+
+    return connected;
+}
+
+bool Graph::checkIfNodesAreConnectedDFS(int indexA, int indexB, bool verbose) {
+    if (indexA < this->getNodesCount() && indexB <= this->getNodesCount() && this->getNodeWithIndex(indexA) != nullptr && this->getNodeWithIndex(indexB) != nullptr) {
+        if (this->nodesInTheGraph.empty()) {
+            return false;
+        }
+
+        if (this->nodesInTheGraph.size() == 1) {
+            return false;
+        }
+
+        // Set all checked values to false
+        for (Node * node : this->nodesInTheGraph) {
+            if (node == nullptr) {
+                continue;
+            }
+
+            node->setChecked(false);
+        }
+
+        for (Node * node : this->nodesInTheGraph) {
+            if (node == nullptr) {
+                continue;
+            }
+
+            this->checkIfNodesAreConnectedDFSRecursion(node, this->getNodeWithIndex(indexA), this->getNodeWithIndex(indexB), true);
+        }
+
+        // Set all checked values to false
+        for (Node * node : this->nodesInTheGraph) {
+            if (node == nullptr) {
+                continue;
+            }
+
+            node->setChecked(false);
+        }
+
+        std::cout << "Checking if node with index " << indexA << " is connected to the node with index " << indexB << ":" << std::endl;
+
+        return this->checkIfNodesAreConnectedDFSRecursion(this->getNodeWithIndex(indexA), this->getNodeWithIndex(indexA), this->getNodeWithIndex(indexB), false);
+    } else {
+        std::cout << "Index " << indexA << " or " << indexB << " does not exist, so connection between the nodes can't be checked." << std::endl;
+        return false;
+    }
 }
 
 

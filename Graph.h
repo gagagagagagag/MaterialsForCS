@@ -36,7 +36,11 @@ public:
 
     bool isGraphConnected();
 
-    bool isGraphConnectedDFS();
+    bool isGraphConnectedDFS(bool verbose = false);
+
+    bool checkIfNodesAreConnectedDFS(int indexA, int indexB, bool verbose = false);
+
+    bool checkIfNodesAreConnectedDFSRecursion(Node * nextNode, Node* source, Node * target, bool verbose = false);
 
     bool isGraphEuler();
 
@@ -71,7 +75,7 @@ public:
 private:
     std::vector<Node *> nodesInTheGraph;
 
-    void isGraphConnectedDFSRecursion(Node &node);
+    void isGraphConnectedDFSRecursion(Node &node, bool verbose = false);
 };
 
 

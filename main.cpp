@@ -34,7 +34,7 @@ int main() {
 
     graph->connectNodes(1, 2);
 
-    graph->connectNodes(0, 5);
+//    graph->connectNodes(0, 5);
 
 //    graph->removeANodeFromTheGraph(2);
 
@@ -59,6 +59,10 @@ int main() {
     Node * leastConnectionsNode = graph->vertexMinDegree();
 
     if (leastConnectionsNode != nullptr) std::cout << "The node with the least connections has an index: " << leastConnectionsNode->getIndex() << " and has " << leastConnectionsNode->getConnectedNodesLength() << " connections" << std::endl;
+
+    std::cout << "Checking node connection with DFS:" << std::endl;
+    bool result = graph->checkIfNodesAreConnectedDFS(5, 3);
+    std::cout << "The nodes are" << (result ?  "" : " not") << " connected." << std::endl;
 
     std::cout << *graph;
 
