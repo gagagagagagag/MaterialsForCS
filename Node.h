@@ -1,5 +1,6 @@
 #include <vector>
 #include <ostream>
+#include "Edge.h"
 
 
 #ifndef PLAYGROUND_NODE_H
@@ -18,9 +19,11 @@ public:
 
     std::vector<Node *> getConnectedNodes() const;
 
-    void connectToNode(Node& node);
+    std::vector<Edge *> getEdges() const;
 
-    void disconnectFromNode(Node &node);
+    void connectToNode(Node& node, bool undirectedGraph, int edgeWeight = 1);
+
+    void disconnectFromNode(Node &node, bool undirectedGraph);
 
     int getConnectedNodesLength() const;
 
@@ -40,9 +43,10 @@ private:
     int value;
     bool checked;
     int index;
-    std::vector<Node *> connectedNodes;
+//    std::vector<Node *> connectedNodes;
+    std::vector<Edge *> connectedNodes;
 
-    void addANodeToConnectedNodes(Node& node);
+    void addANodeToConnectedNodes(Node& node, int edgeWeight);
     void removeANodeFromConnectedNodes(Node& node);
 
 };

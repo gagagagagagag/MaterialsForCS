@@ -8,7 +8,7 @@
 std::ostream &operator<<(std::ostream &out, const GraphMatrix &matrixGraph) {
     out << std::endl;
     out << "---------------------------------------" << std::endl;
-    out << "Matrix Graph contents:" << std::endl;
+    out << "Matrix Graph contents (edge weights are provided in brackets):" << std::endl;
 
     for (int i = 0; i < matrixGraph.nodesInTheGraph.size(); i++) {
         out << "Node " << i << " is connected to nodes: ";
@@ -17,8 +17,8 @@ std::ostream &operator<<(std::ostream &out, const GraphMatrix &matrixGraph) {
                 continue;
             }
 
-            if (matrixGraph.nodesInTheGraph.at(i).at(j) == 1) {
-                out << j << " ";
+            if (matrixGraph.nodesInTheGraph.at(i).at(j) > 0) {
+                out << j << "(" << matrixGraph.nodesInTheGraph.at(i).at(j) << ")" << " ";
             }
         }
         out << std::endl;
@@ -27,7 +27,7 @@ std::ostream &operator<<(std::ostream &out, const GraphMatrix &matrixGraph) {
     return out;
 }
 
-GraphMatrix::GraphMatrix() {}
+GraphMatrix::GraphMatrix(bool undirectedGraph) : undirectedGraph(undirectedGraph) {}
 
 void GraphMatrix::addANodeToTheGraph() {
     this->nodesInTheGraph.push_back(std::vector<int>());
@@ -41,16 +41,20 @@ void GraphMatrix::addANodeToTheGraph() {
 
 }
 
-void GraphMatrix::connectNodes(int indexA, int indexB) {
+void GraphMatrix::connectNodes(int indexA, int indexB, int connectionWeight) {
     if (indexA < this->nodesInTheGraph.size() && indexB < this->nodesInTheGraph.size()) {
-        this->nodesInTheGraph.at(indexA).at(indexB) = 1;
-        this->nodesInTheGraph.at(indexB).at(indexA) = 1;
+        this->nodesInTheGraph.at(indexA).at(indexB) = connectionWeight;
+        if (this->undirectedGraph) {
+            this->nodesInTheGraph.at(indexB).at(indexA) = connectionWeight;
+        }
     }
 }
 
 void GraphMatrix::disconnectNodes(int indexA, int indexB) {
     if (indexA < this->nodesInTheGraph.size() && indexB < this->nodesInTheGraph.size()) {
         this->nodesInTheGraph.at(indexA).at(indexB) = 0;
-        this->nodesInTheGraph.at(indexB).at(indexA) = 0;
+        if (this->undirectedGraph) {
+            this->nodesInTheGraph.at(indexB).at(indexA) = 0;
+        }
     }
 }

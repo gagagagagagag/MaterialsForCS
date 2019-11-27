@@ -6,7 +6,7 @@
 
 class Graph {
 public:
-    Graph();
+    Graph(bool undirectedGraph = true);
 
     Node * addANodeToTheGraph(int value);
 
@@ -24,9 +24,9 @@ public:
 
     int getNotNullNodesCount();
 
-    void connectNodes(Node& a, Node& b);
+    void connectNodes(Node& a, Node& b, int edgeWeight = 1);
 
-    void connectNodes(int indexA, int indexB);
+    void connectNodes(int indexA, int indexB, int edgeWeight = 1);
 
     void disconnectNodes(Node& a, Node& b);
 
@@ -54,7 +54,7 @@ public:
 
         out << std::endl;
         out << "---------------------------------------" << std::endl;
-        out << "Graph contents:" << std::endl;
+        out << "Graph contents (edge weights are provided in brackets):" << std::endl;
 
         int i = 0;
 
@@ -74,9 +74,12 @@ public:
 
 private:
     std::vector<Node *> nodesInTheGraph;
+    bool undirectedGraph;
 
     void isGraphConnectedDFSRecursion(Node &node, bool verbose = false);
 };
+
+
 
 
 #endif //PLAYGROUND_GRAPH_H

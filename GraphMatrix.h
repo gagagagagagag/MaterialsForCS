@@ -11,11 +11,11 @@
 
 class GraphMatrix {
 public:
-    GraphMatrix();
+    GraphMatrix(bool undirectedGraph = true);
 
     void addANodeToTheGraph();
 
-    void connectNodes(int indexA, int indexB);
+    void connectNodes(int indexA, int indexB, int connectionWeight = 1);
 
     void disconnectNodes(int indexA, int indexB);
 
@@ -23,6 +23,7 @@ public:
 
 private:
     std::vector<std::vector<int>> nodesInTheGraph;
+    bool undirectedGraph;
 
 };
 

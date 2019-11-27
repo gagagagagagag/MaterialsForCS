@@ -15,26 +15,45 @@ Node::Node(int value, int index) : value(value), index(index) {
 }
 
 std::vector<Node *> Node::getConnectedNodes() const {
+    std::vector<Node *> connectedNodesToSend;
+
+    for (Edge * edge : this->connectedNodes) {
+        Node * conNode = edge->getConnectedNode();
+        if (conNode != nullptr) {
+            connectedNodesToSend.push_back(conNode);
+        }
+    }
+
+    return connectedNodesToSend;
+}
+
+std::vector<Edge *> Node::getEdges() const {
     return this->connectedNodes;
 }
 
-void Node::connectToNode(Node &node) {
-    this->addANodeToConnectedNodes(node);
-    node.addANodeToConnectedNodes(*this);
+void Node::connectToNode(Node &node, bool undirectedGraph, int edgeWeight) {
+    this->addANodeToConnectedNodes(node, edgeWeight);
+    if (undirectedGraph) {
+        node.addANodeToConnectedNodes(*this, edgeWeight);
+    }
 }
 
-void Node::addANodeToConnectedNodes(Node &node) {
-    this->connectedNodes.push_back(&node);
+void Node::addANodeToConnectedNodes(Node &node, int edgeWeight) {
+    this->connectedNodes.push_back(new Edge(this, &node, edgeWeight));
 }
 
-void Node::disconnectFromNode(Node &node) {
+void Node::disconnectFromNode(Node &node, bool undirectedGraph) {
     this->removeANodeFromConnectedNodes(node);
-    node.removeANodeFromConnectedNodes(*this);
+    if (undirectedGraph) {
+        node.removeANodeFromConnectedNodes(*this);
+    }
 }
 
 void Node::removeANodeFromConnectedNodes(Node &node) {
-    std::vector<Node *>::iterator it;
-    it = std::find(this->connectedNodes.begin(), this->connectedNodes.end(), &node);
+    std::vector<Edge *>::iterator it;
+    it = std::find_if(this->connectedNodes.begin(), this->connectedNodes.end(), [node](Edge * edge) -> bool {
+        return edge->getConnectedNode(node) != nullptr;
+    });
 
     if (it != this->connectedNodes.end()) {
         this->connectedNodes.erase(it);
@@ -56,8 +75,12 @@ void Node::setChecked(bool checked) {
 std::ostream &operator<<(std::ostream &out, const Node &node) {
     out << "Index " << node.index << ": " << "The node with index " << node.index << (node.value != -1 ? " and value: " : "") << (node.value != -1 ? std::to_string(node.value) : "") << " is connected to nodes with indexes: ";
 
-    for (const auto * connectedNode : node.getConnectedNodes()){
-        out << connectedNode->getIndex() << " ";
+//    for (const auto * connectedNode : node.getConnectedNodes()){
+//        out << connectedNode->getIndex() << " ";
+//    }
+
+    for (const auto * edge : node.getEdges()){
+        out << edge->getConnectedNode()->getIndex() << "(" << edge->getWeight() << ")" << " ";
     }
 
     out << std::endl;

@@ -18,25 +18,17 @@ int main() {
 
     graph->addANodeToTheGraph();
 
+    graph->addANodeToTheGraph();
+
     graph->connectNodes(0, 1);
 
-    graph->connectNodes(0, 2);
+    graph->connectNodes(1, 2);
 
-    graph->addANodeToTheGraph();
-
-    graph->addANodeToTheGraph();
+    graph->connectNodes(1, 3);
 
     graph->connectNodes(2, 3);
 
     graph->connectNodes(3, 4);
-
-    graph->connectNodes(4, 0);
-
-    graph->connectNodes(1, 2);
-
-//    graph->connectNodes(0, 5);
-
-//    graph->removeANodeFromTheGraph(2);
 
     std::cout << std::endl;
     std::cout << "---------------------------------------" << std::endl;
@@ -48,7 +40,7 @@ int main() {
 
     std::cout << (graph->isGraphConnectedDFS() ? "Graph is connected. (DFS)" : "Graph is not connected. (DFS)") << std::endl;
 
-    std::cout << (graph->isGraphEuler() ? "Graph is Euler." : "Graph is not Euler.") << std::endl;
+    std::cout << (graph->isGraphEuler() ? "Graph is Eulerian." : "Graph is not Eulerian.") << std::endl;
 
     std::cout << (graph->isIsomorphicToTriangle() ? "There exists a subgraph in the graph that is isomorphic to a graph containing three nodes in a triangular pattern." : "There does not exist a subgraph in the graph that is isomorphic to a graph containing three nodes in a triangular pattern.") << std::endl;
 
@@ -61,14 +53,14 @@ int main() {
     if (leastConnectionsNode != nullptr) std::cout << "The node with the least connections has an index: " << leastConnectionsNode->getIndex() << " and has " << leastConnectionsNode->getConnectedNodesLength() << " connections" << std::endl;
 
     std::cout << "Checking node connection with DFS:" << std::endl;
-    bool result = graph->checkIfNodesAreConnectedDFS(5, 3);
+    bool result = graph->checkIfNodesAreConnectedDFS(2, 4);
     std::cout << "The nodes are" << (result ?  "" : " not") << " connected." << std::endl;
 
     std::cout << *graph;
 
     // Matrix Graph
 
-    auto * matrixGraph = new GraphMatrix();
+    auto * matrixGraph = new GraphMatrix(true);
 
     matrixGraph->addANodeToTheGraph();
 
@@ -84,7 +76,7 @@ int main() {
 
     matrixGraph->connectNodes(0, 3);
 
-    matrixGraph->connectNodes(1, 4);
+    matrixGraph->connectNodes(1, 4, 10);
 
     matrixGraph->connectNodes(2, 3);
 

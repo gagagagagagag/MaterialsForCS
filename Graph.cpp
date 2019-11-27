@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Graph.h"
 
-Graph::Graph() {
+Graph::Graph(bool undirectedGraph) : undirectedGraph(undirectedGraph) {
 }
 
 Node * Graph::addANodeToTheGraph(int value) {
@@ -51,25 +51,25 @@ void Graph::removeANodeFromTheGraph(int index) {
     }
 }
 
-void Graph::connectNodes(Node &a, Node &b) {
-    a.connectToNode(b);
+void Graph::connectNodes(Node &a, Node &b, int edgeWeight) {
+    a.connectToNode(b, this->undirectedGraph, edgeWeight);
 }
 
-void Graph::connectNodes(int indexA, int indexB) {
-    if (indexA < this->getNodesCount() && indexB <= this->getNodesCount() && this->getNodeWithIndex(indexA) != nullptr && this->getNodeWithIndex(indexB) != nullptr) {
-        this->getNodeWithIndex(indexA)->connectToNode(*this->getNodeWithIndex(indexB));
+void Graph::connectNodes(int indexA, int indexB, int edgeWeight) {
+    if (indexA < this->getNodesCount() && indexB < this->getNodesCount() && this->getNodeWithIndex(indexA) != nullptr && this->getNodeWithIndex(indexB) != nullptr) {
+        this->getNodeWithIndex(indexA)->connectToNode(*this->getNodeWithIndex(indexB), this->undirectedGraph, edgeWeight);
     } else {
         std::cout << "Index " << indexA << " or " << indexB << " does not exist, so the nodes were not connected" << std::endl;
     }
 }
 
 void Graph::disconnectNodes(Node &a, Node &b) {
-    a.disconnectFromNode(b);
+    a.disconnectFromNode(b, this->undirectedGraph);
 }
 
 void Graph::disconnectNodes(int indexA, int indexB) {
     if (indexA < this->getNodesCount() && indexB <= this->getNodesCount() && this->getNodeWithIndex(indexA) != nullptr && this->getNodeWithIndex(indexB) != nullptr) {
-        this->getNodeWithIndex(indexA)->disconnectFromNode(*this->getNodeWithIndex(indexB));
+        this->getNodeWithIndex(indexA)->disconnectFromNode(*this->getNodeWithIndex(indexB), this->undirectedGraph);
     } else {
         std::cout << "Index " << indexA << " or " << indexB << " does not exist, so the nodes were not disconnected" << std::endl;
     }
@@ -365,8 +365,3 @@ bool Graph::checkIfNodesAreConnectedDFS(int indexA, int indexB, bool verbose) {
         return false;
     }
 }
-
-
-
-
-
