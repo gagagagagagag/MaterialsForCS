@@ -15,14 +15,19 @@ public:
 
     void addANodeToTheGraph();
 
-    void connectNodes(int indexA, int indexB, int connectionWeight = 1);
+    void removeANodeFromTheGraph(int index);
+
+    void connectNodes(int indexA, int indexB, float connectionWeight = 1);
 
     void disconnectNodes(int indexA, int indexB);
+
+    void printMatrix();
 
     friend std::ostream &operator<<(std::ostream &os, const GraphMatrix &matrix);
 
 private:
-    std::vector<std::vector<int>> nodesInTheGraph;
+    std::vector<std::vector<float>> nodesInTheGraph;
+    std::vector<int> removedNodes;
     bool undirectedGraph;
 
 };
