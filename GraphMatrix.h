@@ -23,6 +23,14 @@ public:
 
     void printMatrix();
 
+    bool isTournament();
+
+    bool hasCycleOfThree();
+
+    void removeLeafs();
+
+    bool nodeHasCycleThree(int currentIndex, int targetIndex, int step);
+
     friend std::ostream &operator<<(std::ostream &os, const GraphMatrix &matrix);
 
 private:

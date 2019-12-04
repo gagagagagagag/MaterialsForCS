@@ -30,6 +30,8 @@ int main() {
 //
 //    graph->connectNodes(3, 4);
 //
+//    graph->removeANodeFromTheGraph(1);
+//
 //    std::cout << std::endl;
 //    std::cout << "---------------------------------------" << std::endl;
 //    std::cout << std::endl;
@@ -70,17 +72,33 @@ int main() {
 
     matrixGraph->addANodeToTheGraph();
 
-    matrixGraph->connectNodes(0, 1, 1);
+    matrixGraph->addANodeToTheGraph();
 
-    matrixGraph->connectNodes(1, 2, -1);
+    matrixGraph->connectNodes(1, 0);
 
-    matrixGraph->connectNodes(2, 3, 2);
+    matrixGraph->connectNodes(1, 2);
 
-    matrixGraph->connectNodes(3, 0, 3.5);
+    matrixGraph->connectNodes(0, 3);
 
-    matrixGraph->connectNodes(2, 2, 7);
+    matrixGraph->connectNodes(3, 2);
 
-//    matrixGraph->removeANodeFromTheGraph(2);
+    matrixGraph->connectNodes(2, 4);
+
+//    matrixGraph->connectNodes(2, 1, 6);
+
+//    matrixGraph->connectNodes(2, 3, 7);
+
+//    matrixGraph->removeANodeFromTheGraph(4);
+
+//    std::cout << "The graph " << (matrixGraph->isTournament() ? "is " : "isn't ") << "a tournament." << std::endl;
+
+//    std::cout << "The graph " << (matrixGraph->hasCycleOfThree() ? "has " : "doesn't have ") << "a cycle of three." << std::endl;
+
+    std::cout << *matrixGraph;
+
+    matrixGraph->printMatrix();
+
+    matrixGraph->removeLeafs();
 
     std::cout << *matrixGraph;
 

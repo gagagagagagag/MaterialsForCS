@@ -69,6 +69,10 @@ void GraphMatrix::addANodeToTheGraph() {
 
 void GraphMatrix::connectNodes(int indexA, int indexB, float connectionWeight) {
     if (indexA < this->nodesInTheGraph.size() && indexB < this->nodesInTheGraph.size()) {
+        if (indexA == indexB && this->undirectedGraph) {
+            return;
+        }
+
         this->nodesInTheGraph.at(indexA).at(indexB) = connectionWeight;
         if (this->undirectedGraph) {
             this->nodesInTheGraph.at(indexB).at(indexA) = connectionWeight;
@@ -93,5 +97,94 @@ void GraphMatrix::removeANodeFromTheGraph(int index) {
             this->nodesInTheGraph[index][i] = 0;
             this->nodesInTheGraph[i][index] = 0;
         }
+    }
+}
+
+bool GraphMatrix::isTournament() {
+    for (int i = 0; i < this->nodesInTheGraph.size(); i++) {
+        if (std::find(this->removedNodes.begin(), this->removedNodes.end(), i) != this->removedNodes.end()) {
+            continue;
+        }
+
+        for (int j = 0; j < this->nodesInTheGraph.size(); j++) {
+            if (i == j) {
+                if (this->nodesInTheGraph.at(i).at(i) != 0) {
+                    return false;
+                } else {
+                    continue;
+                }
+            }
+
+            if (std::find(this->removedNodes.begin(), this->removedNodes.end(), j) != this->removedNodes.end()) {
+                continue;
+            }
+
+            if (this->nodesInTheGraph.at(i).at(j) == 0 && this->nodesInTheGraph.at(j).at(i) == 0) {
+                return false;
+            }
+
+            if (this->nodesInTheGraph.at(i).at(j) != 0 && this->nodesInTheGraph.at(j).at(i) != 0) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+bool GraphMatrix::hasCycleOfThree() {
+    for (int i = 0; i < this->nodesInTheGraph.size(); i++) {
+        if (std::find(this->removedNodes.begin(), this->removedNodes.end(), i) != this->removedNodes.end()) {
+            continue;
+        }
+
+        if (nodeHasCycleThree(i, i, 0)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool GraphMatrix::nodeHasCycleThree(int currentIndex, int targetIndex, int step) {
+    if (step > 2) {
+        return false;
+    }
+    if (currentIndex == targetIndex) {
+        return true;
+    }
+
+    for (int i = 0; i < this->nodesInTheGraph.size(); i++) {
+        if (std::find(this->removedNodes.begin(), this->removedNodes.end(), i) != this->removedNodes.end()) {
+            continue;
+        }
+
+        if (this->nodesInTheGraph.at(currentIndex).at(i) != 0) {
+            return nodeHasCycleThree(i, targetIndex, step + 1);
+        }
+    }
+
+    return false;
+}
+
+void GraphMatrix::removeLeafs() {
+    std::vector<int> nodesToRemove;
+    for (int i = 0; i < this->nodesInTheGraph.size(); i++) {
+        if (std::find(this->removedNodes.begin(), this->removedNodes.end(), i) != this->removedNodes.end()) {
+            continue;
+        }
+
+        for (int j = 0; j < this->nodesInTheGraph.size(); j++) {
+            if (this->nodesInTheGraph.at(i).at(j) != 0) {
+                goto outerloopContiniue;
+            }
+        }
+
+        nodesToRemove.push_back(i);
+
+        outerloopContiniue:;
+    }
+
+    for (int i : nodesToRemove) {
+        this->removeANodeFromTheGraph(i);
     }
 }
