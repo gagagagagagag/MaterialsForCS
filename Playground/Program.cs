@@ -1,166 +1,173 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace ENG_Lab05
+namespace Playground
 {
-    class MainClass
+    class Program
     {
-        public static void Main(string[] args)
+
+        static void Main(string[] args)
         {
+            Random r = new Random(500);
+            Console.WriteLine("--------ETAP I-----------");
+            ////testing extension methods
+            bool isItTrue = 5.CheckDivision(3);
+            Console.WriteLine(isItTrue);
+            isItTrue = 5.CheckDivision(5);
+            Console.WriteLine(isItTrue);
+            int val = 10;
+            for (int i = 1; i <= val; i++)
+                Console.WriteLine("is {0} divisible by {1}? \t {2}", val, i, val.CheckDivision(i));
             Console.WriteLine();
-            Console.WriteLine(" >>> Part 1 -- List shapes <<<");
-            Console.WriteLine();
+            string testString = "hskjfdhkjewrhkjewlfhsalkjfadshlkjfahewkjfhkjdsalhfgalkjewf";
+            Console.WriteLine(testString);
+            Console.WriteLine(testString.TransformString());
 
-            // @TODO. Part 1 -- List shapes [2pt]
-            // Create the Shape classes hierarchy to make the initialiation and the listing work.
-            // Leave the Point class not derivated from anything.
-            // All shape classes are derivated from Shape.
-            //   Rectangle constructor takes coordinates of the left upper and right bottom corners (X1, Y1, X2, Y2).
-            //   Circle constructor takes coordinates of a center and a radius.
-            //   Line constructor takes coordinates of two points which it is drawn through (X1, Y1, X2, Y2).
-            // Make sure to redefine the ToString method appropriatery, to fit the resulting output.
-            //
-            // Note!
-            // 1. For the matter of this laboratory task, assume that we work in the standard Euclidean coordinate system.
-            // X coordinate grows from left to right, Y coordinate grows from bottom to up.
-            // 2. In this task it is forbidden to use default constructors (without parameters).
-            // 3. Rectangle here is basic versions of these shapes, aligned to the axes (X and Y), this case does not cover rotation.
+            Console.WriteLine("\n--------ETAP III-----------\n");
+            ////testing standard queue
+            int[] valuesForQueue = new int[20];
 
-            Shape[] shapes =
+            GenericQueue<int> queue = new MyQueue<int>();
+            for (int i = 0; i < valuesForQueue.Length; i++)
             {
-                new Rectangle(1, 4, 6, 1),
-                new Circle(5, 4, 2),
-                new Rectangle(2, 8, 5, 1),
-                new Line(2, 1, 8, 4),
-                new Rectangle(7, 5, 12, 3),
-                new Circle(4, 0, 3),
-            };
-            for (int i = 0; i < shapes.Length; i++)
-                Console.WriteLine(shapes[i]);
-
-            Console.WriteLine();
-            Console.WriteLine(" >>> Part 2 -- Use shapes <<<");
-            Console.WriteLine();
-
-            for (int i = 0; i < shapes.Length; i++)
-            {
-                shapes[i].PrintInfo();
-                
-                // @TODO. Part 2 -- Use shapes [1pt]
-                // Print shape measurements, including specific information:
-                //   a. An area of every Shape. For this matter define the abstract method Area in the Shape class.
-                //   b. A length of Rectangle diagonals.
-                //   c. A circumference of Circles.
-                //
-                // Note!
-                // The number formatting may be used in the string interpolation, i.e. $"{variableName:0.##}".
-                
-                
+                valuesForQueue[i] = r.Next(100);
+                queue.Enqueue(valuesForQueue[i]);
+                Console.WriteLine(queue.ToString());
             }
 
-            Console.WriteLine();
-            Console.WriteLine(" >>> Part 3 -- \"Produce\" shapes <<<");
-            Console.WriteLine();
+            Console.WriteLine("MyQueue size: " + queue.Count);
 
-            // @TODO: Part 3 -- "Produce" shapes [1pt]
-            // Create the factory method PickUp with two overloads which constructs shapes with default values:
-            //   Line - in case of "l"
-            //   Circle - in case of "c"
-            //   Rectangle - in case of "r"
-            // Use the switch construction for this task.
-            // Default values:
-            //   Line: (0,0), (1,1)
-            //   Rectangle: (1,3), (7,1)
-            //   Circle: (3,5), r = 3
+            queue.Dequeue();
+            Console.WriteLine(queue.ToString());
+            Console.WriteLine("Size is: " + queue.Count);
 
-            Shape[] shapes2 = { Shape.PickUp("r"), Shape.PickUp("c"), Shape.PickUp("l") };
-            Shape[] shapes3 = Shape.PickUp("r", "c", "l");
+            queue.Dequeue();
+            Console.WriteLine(queue.ToString());
+            Console.WriteLine("Size is: " + queue.Count);
 
-            Console.WriteLine("Shapes 2:");
-            for (int i = 0; i < shapes2.Length; i++)
-                Console.WriteLine(shapes2[i]);
+            queue.Dequeue();
+            Console.WriteLine(queue.ToString());
+            Console.WriteLine("Size is: " + queue.Count);
 
-            Console.WriteLine("Shapes 3:");
-            for (int i = 0; i < shapes3.Length; i++)
-                Console.WriteLine(shapes3[i]);
+            var top = queue.Peek();
+            Console.WriteLine("top: {0}, Size is: {1} ", top, queue.Count);
+            queue.Enqueue(99);
+            top = queue.Peek();
+            Console.WriteLine("top: {0}, Size is: {1} ", top, queue.Count);
 
-            Console.WriteLine();
-            Console.WriteLine(" >>> Part 4 -- Deconstruct shapes <<<");
-            Console.WriteLine();
-
-            // @TODO Part 4 -- Move shapes [1pt]
-            // Implement a method which will move a shape into a specified point, aligning the shape center at that point.
-
-            Point anchor1 = new Point(0, 8);
-            Point anchor2 = new Point(15, 7);
-            Shape.MoveShape(shapes2, anchor1);
-            Shape.MoveShape(shapes3, anchor2);
-
-            Console.WriteLine("Shapes 2:");
-            for (int i = 0; i < shapes2.Length; i++)
-                Console.WriteLine(shapes2[i]);
-
-            Console.WriteLine("Shapes 3:");
-            for (int i = 0; i < shapes3.Length; i++)
-                Console.WriteLine(shapes3[i]);
-
-            Console.WriteLine();
-            Console.WriteLine(" >>> Part 5 -- Cover points <<<");
-            Console.WriteLine();
-
-            // @TODO. Part 5 -- Cover centers [1pt]
-            // Find the smallest frame (two Point objects is enough) to cover centers of all created shapes (shapes, shapes2, shapes3).
-
-            /*
-             * Replace this comment block with your code.
-             */
-
-            double minY = 1000, maxY = 0, minX = 1000, maxX = 0;
-            int m;
-            Shape[] tablicaShapeow=new Shape[shapes.Length+shapes2.Length+shapes3.Length];
-            for ( m = 0; m < shapes.Length; m++)
+            GenericQueue<int> queue2 = new MyQueue<int>();
+            for (int i = 0; i < 10; i++)
+                queue2.Enqueue(r.Next(100));
+            Console.WriteLine(queue2.ToString());
+            // no exception expected
+            while (queue2.Count != 0)
             {
-                tablicaShapeow[m] = shapes[m];
+                Console.WriteLine(queue2.ToString());
+                queue2.Dequeue();
+            }
+            try
+            {
+                queue2.Dequeue();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception! : " + e.Message);
             }
 
-            int k;
-
-            for ( k = 0; k < shapes2.Length; k++)
+            try
             {
-                tablicaShapeow[m + k] = shapes2[k];
+                top = queue2.Peek();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception! : " + e.Message);
             }
 
-            int j;
-
-            for (j = 0; j < shapes3.Length; j++)
+            Console.WriteLine("\n--------ETAP IV-----------\n");
+            ////testing priority queue
+            queue = new MyPriorityQueue<int>();
+            for (int i = 0; i < valuesForQueue.Length; i++)
             {
-                tablicaShapeow[m + j + k] = shapes3[j];
+                queue.Enqueue(valuesForQueue[i]);
+                Console.WriteLine(queue.ToString());
             }
 
-            foreach (var shape in tablicaShapeow)
+            Console.WriteLine("MyQueue size: " + queue.Count);
+
+            queue.Dequeue();
+            Console.WriteLine(queue.ToString());
+            Console.WriteLine("Size is: " + queue.Count);
+
+            queue.Dequeue();
+            Console.WriteLine(queue.ToString());
+            Console.WriteLine("Size is: " + queue.Count);
+
+            queue.Dequeue();
+            Console.WriteLine(queue.ToString());
+            Console.WriteLine("Size is: " + queue.Count);
+
+            top = queue.Peek();
+            Console.WriteLine("top: {0}, Size is: {1} ", top, queue.Count);
+            queue.Enqueue(99);
+            top = queue.Peek();
+            Console.WriteLine("top: {0}, Size is: {1} ", top, queue.Count);
+
+            queue2 = new MyPriorityQueue<int>();
+            for (int i = 0; i < 10; i++)
+                queue2.Enqueue(r.Next(100));
+            Console.WriteLine(queue2.ToString());
+            // no exception expected
+            while (queue2.Count != 0)
             {
-                Point shapeCenter = shape.getCenter();
-
-                if (shapeCenter.X > maxX)
-                {
-                    maxX = shapeCenter.X;
-                }
-                if (shapeCenter.X < minX)
-                {
-                    minX = shapeCenter.X;
-                }
-                if (shapeCenter.Y > maxY)
-                {
-                    maxY = shapeCenter.Y;
-                }
-                if (shapeCenter.Y < minY)
-                {
-                    minY = shapeCenter.Y;
-                }
+                Console.WriteLine(queue2.ToString());
+                queue2.Dequeue();
             }
-            System.Console.WriteLine($"Points are ({minX},{minY}) and ({maxX},{maxY})");
-            
+            try
+            {
+                queue2.Dequeue();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception! : " + e.Message);
+            }
 
+            try
+            {
+                top = queue2.Peek();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception! : " + e.Message);
+            }
+
+            Console.WriteLine("\n--------ETAP V-----------\n");
+            //using lambda 
+
+            int[] randomIntegers = new int[100];
+            for (int i = 0; i < randomIntegers.Length; i++)
+                randomIntegers[i] = r.Next(1, 100);
+            IEnumerable<int> filtered = null;//
+            //filtered = ... here write Where statement to get even elements from randomIntegers.
+            filtered = randomIntegers.Where(item => item % 2 == 0);
+            foreach(var i in filtered)
+                Console.Write(i + " ");
+
+            List<Book> books = new List<Book>() {
+             new Book { Name = "Star Wars", Year = 2000 },
+             new Book { Name = "Lord of The Rings", Year = 1954 },
+             new Book { Name = "Math is fun", Year = 1950 }
+          };
+            IEnumerable<Book> newBooksList = null;
+            //newBooksList = ... here write Select statement to create new list with transformed elements from books collection
+            newBooksList = books.Select(book => new Book{Name = book.Name, Year = book.Year - 100});
+            foreach (var item in newBooksList)
+                Console.WriteLine(item);
+
+            int yearSum = 0;
+            //yearsSum = ... here write Sum statement to sum years of all of the elements from books list.
+            yearSum = books.Sum(book => book.Year);
+            Console.WriteLine("Sum is: " + yearSum);
         }
     }
 }
