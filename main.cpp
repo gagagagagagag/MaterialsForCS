@@ -1,108 +1,89 @@
-// Algorythms Graph
-
 #include <iostream>
-#include "Graph.h"
-#include "GraphMatrix.h"
+
+int comparisonCounter = 0;
+
+void sortujPrzezScalenie(int tablica[], int, int);
+void scalDwieCzesci(int tablica[], int indeksPoczatku, int srodkowyIndeks, int indeksKonca);
 
 int main() {
+//    int tablica[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+//    int tablica[] = {9, 8, 7, 6, 5, 4, 3, 2, 1};
+//    int tablica[] = {1, 3, 2, 4, 7, 5, 6, 8, 9};
+    int tablica[] = {1, 1, 2};
 
-    // List Graph
+    int tablicaLength = 3;
 
-//    auto * graph = new Graph();
-//
-//    graph->addANodeToTheGraph();
-//
-//    graph->addANodeToTheGraph();
-//
-//    graph->addANodeToTheGraph();
-//
-//    graph->addANodeToTheGraph();
-//
-//    graph->addANodeToTheGraph();
-//
-//    graph->connectNodes(0, 1);
-//
-//    graph->connectNodes(1, 2);
-//
-//    graph->connectNodes(1, 3);
-//
-//    graph->connectNodes(2, 3);
-//
-//    graph->connectNodes(3, 4);
-//
-//    graph->removeANodeFromTheGraph(1);
-//
-//    std::cout << std::endl;
-//    std::cout << "---------------------------------------" << std::endl;
-//    std::cout << std::endl;
-//
-//    std::cout << (graph->isGraphEven() ? "Graph is even." : "Graph is not even.") << std::endl;
-//
-//    std::cout << (graph->isGraphConnected() ? "Graph is connected. (BFS)" : "Graph is not connected. (BFS)") << std::endl;
-//
-//    std::cout << (graph->isGraphConnectedDFS() ? "Graph is connected. (DFS)" : "Graph is not connected. (DFS)") << std::endl;
-//
-//    std::cout << (graph->isGraphEuler() ? "Graph is Eulerian." : "Graph is not Eulerian.") << std::endl;
-//
-//    std::cout << (graph->isIsomorphicToTriangle() ? "There exists a subgraph in the graph that is isomorphic to a graph containing three nodes in a triangular pattern." : "There does not exist a subgraph in the graph that is isomorphic to a graph containing three nodes in a triangular pattern.") << std::endl;
-//
-//    Node * mostConnectionsNode = graph->vertexMaxDegree();
-//
-//    if (mostConnectionsNode != nullptr) std::cout << "The node with the most connections has an index: " << mostConnectionsNode->getIndex() << " and has " << mostConnectionsNode->getConnectedNodesLength() << " connections" << std::endl;
-//
-//    Node * leastConnectionsNode = graph->vertexMinDegree();
-//
-//    if (leastConnectionsNode != nullptr) std::cout << "The node with the least connections has an index: " << leastConnectionsNode->getIndex() << " and has " << leastConnectionsNode->getConnectedNodesLength() << " connections" << std::endl;
-//
-//    std::cout << "Checking node connection with DFS:" << std::endl;
-//    bool result = graph->checkIfNodesAreConnectedDFS(2, 4);
-//    std::cout << "The nodes are" << (result ?  "" : " not") << " connected." << std::endl;
-//
-//    std::cout << *graph;
+    sortujPrzezScalenie(tablica, 0, tablicaLength - 1);
 
-    // Matrix Graph
+    for (int i = 0; i < tablicaLength; i++) {
+        std::cout << tablica[i] << " ";
+    }
 
-    auto * matrixGraph = new GraphMatrix(false);
+    std::cout << std::endl;
+    std::cout << "Comparisons: " << comparisonCounter;
+}
 
-    matrixGraph->addANodeToTheGraph();
+void sortujPrzezScalenie(int tablica[], int indeksPoczatku, int indeksKonca) {
 
-    matrixGraph->addANodeToTheGraph();
+    if (indeksPoczatku < indeksKonca) {
+        // Krok 1 - podziel tablice na dwie częśći
+        int srodkowyIndeks = (indeksKonca + indeksPoczatku) / 2;
 
-    matrixGraph->addANodeToTheGraph();
+        // Krok 2 - podziel lewą część
+        sortujPrzezScalenie(tablica, indeksPoczatku, srodkowyIndeks);
 
-    matrixGraph->addANodeToTheGraph();
+        // Krok 3 - podziel prawa część
+        sortujPrzezScalenie(tablica, srodkowyIndeks + 1, indeksKonca);
 
-    matrixGraph->addANodeToTheGraph();
+        // Krok 4 - scal dwie części
+        scalDwieCzesci(tablica, indeksPoczatku, srodkowyIndeks, indeksKonca);
+    } else {
+        return;
+    }
+}
 
-    matrixGraph->connectNodes(1, 0);
 
-    matrixGraph->connectNodes(1, 2);
+void scalDwieCzesci(int tablica[], int indeksPoczatku, int srodkowyIndeks, int indeksKonca) {
+    int rozmiarLewejCzesci = srodkowyIndeks - indeksPoczatku + 1;
+    int rozmiarPrawejCzesci = indeksKonca - srodkowyIndeks;
 
-    matrixGraph->connectNodes(0, 3);
+    int kopiaLewejCzesci[rozmiarLewejCzesci];
+    int kopiaPrawejCzesci[rozmiarPrawejCzesci];
 
-    matrixGraph->connectNodes(3, 2);
+    for (int i = 0; i < rozmiarLewejCzesci; i++) {
+        kopiaLewejCzesci[i] = tablica[indeksPoczatku + i];
+    }
+    for (int i = 0; i < rozmiarPrawejCzesci; i++) {
+        kopiaPrawejCzesci[i] = tablica[srodkowyIndeks + i + 1];
+    }
 
-    matrixGraph->connectNodes(2, 4);
+    int biezacyIndeksLewejCzesci = 0, biezacyIndeksPrawejCzesci = 0;
+    int biezacyIndeksWOryginalnejTablicy = indeksPoczatku;
 
-//    matrixGraph->connectNodes(2, 1, 6);
 
-//    matrixGraph->connectNodes(2, 3, 7);
+    while (biezacyIndeksLewejCzesci < rozmiarLewejCzesci && biezacyIndeksPrawejCzesci < rozmiarPrawejCzesci) {
+        // COMPARISON COUNTER
+        comparisonCounter++;
 
-//    matrixGraph->removeANodeFromTheGraph(4);
+        if (kopiaLewejCzesci[biezacyIndeksLewejCzesci] <= kopiaPrawejCzesci[biezacyIndeksPrawejCzesci]) {
+            tablica[biezacyIndeksWOryginalnejTablicy] = kopiaLewejCzesci[biezacyIndeksLewejCzesci];
+            biezacyIndeksLewejCzesci++;
+        } else {
+            tablica[biezacyIndeksWOryginalnejTablicy] = kopiaPrawejCzesci[biezacyIndeksPrawejCzesci];
+            biezacyIndeksPrawejCzesci++;
+        }
+        biezacyIndeksWOryginalnejTablicy++;
+    }
 
-//    std::cout << "The graph " << (matrixGraph->isTournament() ? "is " : "isn't ") << "a tournament." << std::endl;
+    while (biezacyIndeksLewejCzesci < rozmiarLewejCzesci) {
+        tablica[biezacyIndeksWOryginalnejTablicy] = kopiaLewejCzesci[biezacyIndeksLewejCzesci];
+        biezacyIndeksLewejCzesci++;
+        biezacyIndeksWOryginalnejTablicy++;
+    }
 
-//    std::cout << "The graph " << (matrixGraph->hasCycleOfThree() ? "has " : "doesn't have ") << "a cycle of three." << std::endl;
-
-    std::cout << *matrixGraph;
-
-    matrixGraph->printMatrix();
-
-    matrixGraph->removeLeafs();
-
-    std::cout << *matrixGraph;
-
-    matrixGraph->printMatrix();
-
-    return 0;
+    while (biezacyIndeksPrawejCzesci < rozmiarPrawejCzesci) {
+        tablica[biezacyIndeksWOryginalnejTablicy] = kopiaPrawejCzesci[biezacyIndeksPrawejCzesci];
+        biezacyIndeksPrawejCzesci++;
+        biezacyIndeksWOryginalnejTablicy++;
+    }
 }
