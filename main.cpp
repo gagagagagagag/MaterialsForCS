@@ -1,6 +1,4 @@
-#include <iostream>
-
-int comparisonCounter = 0;
+/*int comparisonCounter = 0;
 
 void sortujPrzezScalenie(int tablica[], int, int);
 void scalDwieCzesci(int tablica[], int indeksPoczatku, int srodkowyIndeks, int indeksKonca);
@@ -86,4 +84,67 @@ void scalDwieCzesci(int tablica[], int indeksPoczatku, int srodkowyIndeks, int i
         biezacyIndeksPrawejCzesci++;
         biezacyIndeksWOryginalnejTablicy++;
     }
+}*/
+
+#include <iostream>
+#include <math.h>
+
+int shellSort(int arr[], int n, int gaps[], int t);
+void printArray(int arr[], int n);
+
+
+int main(int argc, char** argv) {
+    int arr1[] = {1, 2, 3, 4, 5, 6, 7, 8};
+    int arr2[] = {3, 5, 2, 8, 6, 1, 4, 7};
+
+    int n1 = sizeof(arr1) / sizeof(arr1[0]);
+    int n2 = sizeof(arr2) / sizeof(arr2[0]);
+
+    int gaps1[] = {1, 3};
+    int gaps2[] = {1, 2, 4};
+    int t1 = sizeof(gaps1) / sizeof(gaps1[0]);
+    int t2 = sizeof(gaps2) / sizeof(gaps1[0]);
+
+    int cmp;
+
+    std::cout << "Array 1, gaps 1" << std::endl;
+    cmp = shellSort(arr1, n1, gaps1, t1);
+    std::cout << "Number of comparisons: " << cmp << std::endl;
+    std::cout << "Array 1, gaps 2" << std::endl;
+    cmp = shellSort(arr1, n1, gaps2, t2);
+    std::cout << "Number of comparisons: " << cmp << std::endl;
+    std::cout << "Array 2, gaps 1" << std::endl;
+    cmp = shellSort(arr2, n2, gaps1, t1);
+    std::cout << "Number of comparisons: " << cmp << std::endl;
+    std::cout << "Array 2, gaps 2" << std::endl;
+    cmp = shellSort(arr2, n2, gaps2, t2);
+    std::cout << "Number of comparisons: " << cmp << std::endl;
+
+    return 0;
+}
+
+int shellSort(int arr[], int n, int gaps[], int t) {
+    int comparisons = 0;
+    for (int i = t - 1; i >= 0; i--) {
+        for (int j = gaps[i]; j < n; j++) {
+            int temp = arr[j];
+            int k;
+            for (k = j; k >= gaps[i] && arr[k - gaps[i]] > temp; k -= gaps[i]) {
+                arr[k] = arr[k - gaps[i]];
+                comparisons++;
+            }
+            arr[k] = temp;
+            comparisons++;
+        }
+        printArray(arr, n);
+    }
+    return comparisons;
+}
+
+void printArray(int arr[], int n) {
+    std::cout << "Array contents: ";
+    for (int i = 0; i < n; i++) {
+        std::cout << arr[i] << " ";
+    }
+    std::cout << std::endl;
 }
